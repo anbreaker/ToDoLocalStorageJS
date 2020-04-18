@@ -45,13 +45,13 @@ function borrarTareaDOM(e) {
     if (e.target.classList.contains('borrar-tarea')) {
         // console.log('Click en boton eliminar');
         console.log(e.target.parentElement.remove());
-        alert('Tarea eliminada');
+        console.log('Tarea eliminada');
     }
 }
 
 // Agregar a Local Storage
 function agregarTareaLocalStorage(tarea) {
-    let tareas = [];
+    let tareas;
     // Leer tareas
     tareas = obtenerTareasLocalStorage();
     // Agregar nueva tarea
