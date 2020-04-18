@@ -9,7 +9,7 @@ function eventListeners() {
     document.getElementById('formulario').addEventListener('submit', agregarTarea);
 
     // Borrar Tareas
-    listaTareas.addEventListener('click', borrarTarea);
+    listaTareas.addEventListener('click', borrarTareaDOM);
 }
 
 // Funciones
@@ -24,7 +24,7 @@ function agregarTarea(e) {
     // Boton para eliminar
     const botonBorrar = document.createElement('a');
     botonBorrar.classList = 'borrar-tarea';
-    botonBorrar.innerHTML = 'x';
+    botonBorrar.innerHTML = 'X';
 
     // Crear elemento y agregar contenido a la lista
     const li = document.createElement('li');
@@ -34,13 +34,43 @@ function agregarTarea(e) {
     // Agrega la tarea a la lista
     listaTareas.appendChild(li);
     // console.log(tarea);
+
+    // Agregar a Local Storage
+    agregarTareaLocalStorage(tarea);
 }
 
-function borrarTarea(e) {
+// Elimina la tarea del DOM
+function borrarTareaDOM(e) {
     e.preventDefault();
     if (e.target.classList.contains('borrar-tarea')) {
         // console.log('Click en boton eliminar');
         console.log(e.target.parentElement.remove());
         alert('Tarea eliminada');
     }
+}
+
+// Agregar a Local Storage
+function agregarTareaLocalStorage(tarea) {
+    let tareas = [];
+    // Leer tareas
+    tareas = obtenerTareasLocalStorage();
+    // Agregar nueva tarea
+    console.log(typeof tareas);
+    tareas.push(tarea);
+    // Convertir de string a un array para Local Storage
+    localStorage.setItem('tareas', JSON.stringify(tareas));
+}
+
+function obtenerTareasLocalStorage() {
+    let tareas = [];
+    console.log(typeof tareas, 'Despues de definicion');
+    // Revision de valores en Local Storage
+    if (localStorage.getItem('tareas') === null) {
+        tareas = [];
+        console.log(typeof tareas);
+    } else {
+        tareas = JSON.parse(localStorage.getItem('tareas'));
+        console.log('else obtenerTareasLocalStorage--> ', typeof tareas);
+    }
+    return tareas;
 }
